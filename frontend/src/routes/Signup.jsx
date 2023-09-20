@@ -1,4 +1,4 @@
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext, Link } from "react-router-dom";
 
 function Signup() {
   const { setUser, setMessages } = useOutletContext();
@@ -81,6 +81,9 @@ function Signup() {
               Submit
             </button>
           </form>
+          <p>
+            Already have an account? <Link to="/login">Login here</Link>
+          </p>
         </section>
       </div>
     </main>

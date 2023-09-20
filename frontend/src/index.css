@@ -1,0 +1,13 @@
+/* General Styling */
+
+body * {
+  font-family: Oswald, Arial, Helvetica, sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+header * {
+  color: #ff0000;
+}

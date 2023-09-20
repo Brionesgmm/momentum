@@ -29,9 +29,8 @@ function Root() {
       <header className="container">
         <div className="text-center">
           <h1 className="">
-            <Link to={user ? "/profile" : "/"}>Binary Upload Boom</Link>
+            <Link to={user ? "/profile" : "/"}>Momentum</Link>
           </h1>
-          <span>The #100Devs Social Network</span>
         </div>
       </header>
       <Messages messages={messages} />
