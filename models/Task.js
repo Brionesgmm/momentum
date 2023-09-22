@@ -10,6 +10,7 @@ const TaskSchema = new mongoose.Schema({
       _id: false,
     },
   ],
+  date: String,
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",

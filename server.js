@@ -11,6 +11,7 @@ const logger = require("morgan");
 const connectDB = require("./config/database");
 const mainRoutes = require("./routes/main");
 const postRoutes = require("./routes/posts");
+const tasksRoutes = require("./routes/tasks");
 const cors = require("cors");
 
 app.use(cors());
@@ -64,7 +65,7 @@ app.use(flash());
 //Setup Routes For Which The Server Is Listening
 app.use("/api", mainRoutes);
 app.use("/api/post", postRoutes);
-// app.use("/api/tasks");
+app.use("/api/tasks", tasksRoutes);
 app.use("*", (_, res) => {
   res.sendFile(path.join(__dirname, "frontend/dist/index.html"));
 });
