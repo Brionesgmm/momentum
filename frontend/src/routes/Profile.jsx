@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
 import PostList from "../components/PostList";
+import AddTasks from "../components/AddTasks";
 
 const Profile = () => {
   const { user, setMessages } = useOutletContext();
@@ -52,7 +53,8 @@ const Profile = () => {
             </Link>
           </div>
           <div className="mt-5">
-            <h2>Add a post</h2>
+            <AddTasks />
+            <h2>Add Next Day Tasks</h2>
             <form
               action="/api/post/createPost"
               encType="multipart/form-data"
