@@ -44,8 +44,6 @@ const AddTasks = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const form = event.currentTarget;
-    console.log(form.action);
     const response = await fetch("/api/tasks/createTasks", {
       method: "POST",
       headers: {
@@ -61,6 +59,12 @@ const AddTasks = () => {
     if (json.tasks) {
       setTasks([]);
     }
+  };
+
+  const deleteTask = (id) => {
+    setTasks((prevTasks) => {
+      return prevTasks.filter((task) => task.id !== id);
+    });
   };
 
   useEffect(() => {
@@ -101,6 +105,7 @@ const AddTasks = () => {
                     handleInputChange(e, task.id, "priority");
                   }}
                 />
+                <button onClick={() => deleteTask(task.id)}>Delete</button>
               </div>
             );
           })}
