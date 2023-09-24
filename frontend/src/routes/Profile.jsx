@@ -5,8 +5,13 @@ import AddTasks from "../components/AddTasks";
 
 const Profile = () => {
   const { user, setMessages } = useOutletContext();
-
   const [posts, setPosts] = useState([]);
+  const [activeTab, setActiveTab] = useState({
+    liveTasks: true,
+    addTasks: false,
+    tasksCharts: false,
+    goals: false,
+  });
 
   useEffect(() => {
     fetch("/api/profile")
@@ -51,6 +56,18 @@ const Profile = () => {
             <Link to="/logout" className="col-3 btn btn-primary">
               Logout
             </Link>
+          </div>
+          <div>
+            <button>Live Tasks</button>
+            <button>Add Tasks</button>
+            <button>Tasks charts</button>
+            <button>Goals</button>
+          </div>
+          <div>
+            {activeTab.liveTasks}
+            {activeTab.addTasks}
+            {activeTab.tasksCharts}
+            {activeTab.goals}
           </div>
           <div className="mt-5">
             <AddTasks />
