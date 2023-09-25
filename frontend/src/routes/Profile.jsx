@@ -6,6 +6,8 @@ import AddTasks from "../components/AddTasks";
 const Profile = () => {
   const { user, setMessages } = useOutletContext();
   const [posts, setPosts] = useState([]);
+  const [tasks, setTasks] = useState([]);
+  const [userID, setUserID] = useState("");
   const [activeTab, setActiveTab] = useState({
     liveTasks: true,
     addTasks: false,
@@ -19,7 +21,11 @@ const Profile = () => {
       .then((data) => setPosts(data));
   }, []);
 
-  console.log(posts);
+  useEffect(() => {
+    if (user) {
+      setUserID(user._id);
+    }
+  }, [user]);
 
   if (!user) {
     return null;
@@ -70,7 +76,7 @@ const Profile = () => {
             {activeTab.goals}
           </div>
           <div className="mt-5">
-            <AddTasks />
+            <AddTasks tasks={tasks} setTasks={setTasks} userID={userID} />
             <h2>Add Next Day Tasks</h2>
             <form
               action="/api/post/createPost"

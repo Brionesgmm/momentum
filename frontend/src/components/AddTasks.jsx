@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
 
-const AddTasks = () => {
-  const [tasks, setTasks] = useState([]);
+const AddTasks = ({ tasks, setTasks, userID }) => {
   const [date, setDate] = useState(getTomorrowDate());
-  const [userID, setUserID] = useState("");
-  const { user } = useOutletContext();
 
   function getTomorrowDate() {
     const today = new Date();
@@ -66,10 +63,6 @@ const AddTasks = () => {
       return prevTasks.filter((task) => task.id !== id);
     });
   };
-
-  useEffect(() => {
-    setUserID(user._id);
-  }, []);
 
   return (
     <div>
