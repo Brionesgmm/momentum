@@ -4,8 +4,7 @@ const upload = require("../middleware/multer");
 const tasksController = require("../controllers/tasks");
 const { ensureAuth, ensureGuest } = require("../middleware/auth");
 
-//Post Routes - simplified for now
-// router.get("/:id", ensureAuth, postsController.getPost);
+router.get("/:id", ensureAuth, tasksController.getTasks);
 
 router.post("/createTasks", ensureAuth, tasksController.createTasks);
 

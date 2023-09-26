@@ -1,5 +1,17 @@
 const Task = require("../models/Task");
 
+exports.getTasks = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const tasks = await Task.find({ user: userId }).lean();
+
+    res.json({ tasks: tasks });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server error");
+  }
+};
+
 exports.createTasks = async (req, res) => {
   try {
     const tasks = await Task.create({

@@ -7,6 +7,7 @@ const Profile = () => {
   const { user, setMessages } = useOutletContext();
   const [posts, setPosts] = useState([]);
   const [tasks, setTasks] = useState([]);
+  const [createdTasks, setCreatedTasks] = useState([]);
   const [userID, setUserID] = useState("");
   const [activeTab, setActiveTab] = useState({
     liveTasks: true,
@@ -14,18 +15,6 @@ const Profile = () => {
     tasksCharts: false,
     goals: false,
   });
-
-  useEffect(() => {
-    fetch("/api/profile")
-      .then((res) => res.json())
-      .then((data) => setPosts(data));
-  }, []);
-
-  useEffect(() => {
-    if (user) {
-      setUserID(user._id);
-    }
-  }, [user]);
 
   if (!user) {
     return null;
@@ -47,6 +36,34 @@ const Profile = () => {
       form.reset();
     }
   };
+
+  useEffect(() => {
+    fetch("/api/profile")
+      .then((res) => res.json())
+      .then((data) => setPosts(data));
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      setUserID(user._id);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const response = await fetch(`/api/tasks/${userID}`);
+        const { tasks } = await response.json();
+        setCreatedTasks(tasks);
+      } catch (error) {
+        console.error("Error fetching post:", error);
+      }
+    };
+
+    fetchTasks();
+  }, [userID]);
+
+  console.log(createdTasks);
 
   return (
     <div className="container">
