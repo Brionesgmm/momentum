@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
 import PostList from "../components/PostList";
 import AddTasks from "../components/AddTasks";
+import LiveTasks from "../components/LiveTasks";
 
 const Profile = () => {
   const { user, setMessages } = useOutletContext();
@@ -15,10 +16,6 @@ const Profile = () => {
     tasksCharts: false,
     goals: false,
   });
-
-  if (!user) {
-    return null;
-  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -63,6 +60,9 @@ const Profile = () => {
     fetchTasks();
   }, [userID]);
 
+  if (!user) {
+    return null;
+  }
   console.log(createdTasks);
 
   return (
@@ -93,6 +93,7 @@ const Profile = () => {
             {activeTab.goals}
           </div>
           <div className="mt-5">
+            <LiveTasks createdTasks={createdTasks} />
             <AddTasks tasks={tasks} setTasks={setTasks} userID={userID} />
             <h2>Add Next Day Tasks</h2>
             <form
