@@ -4,9 +4,20 @@ const LiveTasks = ({ createdTasks }) => {
   const [currentDayTasks, setCurrentDayTasks] = useState([]);
   const [todoTasks, setTodoTasks] = useState([]);
   const [todayDate, setTodayDate] = useState("");
+  const [formattedDate, setFormattedDate] = useState("");
+  const [taskDocID, setTaskDocID] = useState("");
 
   function getTodayDate() {
     const today = new Date();
+
+    const month = today.getMonth() + 1; // Adjust for 0-indexed months
+    const day = today.getDate();
+    const year = today.getFullYear();
+
+    const formattedMonth = month < 10 ? `0${month}` : month;
+    const formattedDay = day < 10 ? `0${day}` : day;
+
+    setFormattedDate(`${formattedMonth}/${formattedDay}/${year}`);
     setTodayDate(today.toISOString().split("T")[0]);
   }
 
@@ -20,6 +31,24 @@ const LiveTasks = ({ createdTasks }) => {
     setTodoTasks(updatedTasks);
   }
 
+  const handleTaskUpdate = async (event) => {
+    event.preventDefault();
+    const response = await fetch(
+      `/api/tasks/updateTasks/${taskDocID}?_method=PUT`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          tasks: todoTasks,
+        }),
+      }
+    );
+    const data = await response.json();
+    setCurrentDayTasks(data);
+  };
+
   useEffect(() => {
     getTodayDate();
     const filteredTasks = createdTasks.filter(
@@ -31,14 +60,16 @@ const LiveTasks = ({ createdTasks }) => {
       setTodoTasks(
         filteredTasks[0].tasks.sort((a, b) => a.priority - b.priority)
       );
+      setTaskDocID(filteredTasks[0]._id);
     }
   }, [createdTasks]);
 
-  console.log(currentDayTasks, todoTasks);
+  console.log(currentDayTasks, todoTasks, taskDocID);
   return (
     <div>
+      <h1>{formattedDate}</h1>
       <h1>Tasks To Get Done Today</h1>
-      <form>
+      <form onSubmit={handleTaskUpdate}>
         {todoTasks.map((task) => {
           return (
             <div key={task.id}>

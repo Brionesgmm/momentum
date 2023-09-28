@@ -25,3 +25,23 @@ exports.createTasks = async (req, res) => {
     console.log(err);
   }
 };
+
+exports.updateTasks = async (req, res) => {
+  try {
+    const newTasks = req.body.tasks;
+
+    const updatedTask = await Task.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        tasks: newTasks,
+      },
+      {
+        new: true,
+      }
+    );
+    console.log("Tasks updated");
+    res.json(updatedTask);
+  } catch (err) {
+    console.log(err);
+  }
+};

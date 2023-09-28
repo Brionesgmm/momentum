@@ -8,7 +8,7 @@ router.get("/:id", ensureAuth, tasksController.getTasks);
 
 router.post("/createTasks", ensureAuth, tasksController.createTasks);
 
-// router.put("/likePost/:id", postsController.likePost);
+router.put("/updateTasks/:id", tasksController.updateTasks);
 
 // router.delete("/deletePost/:id", postsController.deletePost);
 
