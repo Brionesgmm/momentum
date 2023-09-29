@@ -67,15 +67,18 @@ const LiveTasks = ({ createdTasks }) => {
   console.log(currentDayTasks, todoTasks, taskDocID);
   return (
     <div>
-      <h1>{formattedDate}</h1>
-      <h1>Tasks To Get Done Today</h1>
-      <form onSubmit={handleTaskUpdate}>
+      <h1 className="mainTitle">Today: {formattedDate}</h1>
+      <h1 className="subTitle">Get It Done!</h1>
+      <form className="activeTasksForm" onSubmit={handleTaskUpdate}>
         {todoTasks.map((task) => {
           return (
-            <div key={task.id}>
-              <p>{task.priority}</p>
-              <p readOnly>{task.task}</p>
+            <div className="activeTasks" key={task.id}>
+              <p>{task.priority}.</p>
+              <label htmlFor={task.id} readOnly>
+                {task.task}
+              </label>
               <input
+                id={task.id}
                 type="checkbox"
                 name="completed"
                 checked={task.completed}
@@ -84,7 +87,7 @@ const LiveTasks = ({ createdTasks }) => {
             </div>
           );
         })}
-        <button>Update Tasks List</button>
+        <button className="submitBtn">Update Tasks List</button>
       </form>
     </div>
   );
