@@ -65,12 +65,16 @@ const AddTasks = ({ tasks, setTasks, userID }) => {
   };
 
   return (
-    <div>
-      <h1>Create Next Day's Tasks</h1>
+    <div className="addTasksSection">
+      <h1 className="mainTitle">Next Day's Tasks</h1>
       {tasks.length === 0 ? (
-        <p>No tasks</p>
+        <p className="subTitle">No tasks</p>
       ) : (
-        <form encType="multipart/form-data" onSubmit={handleSubmit}>
+        <form
+          className="addTaskForm"
+          encType="multipart/form-data"
+          onSubmit={handleSubmit}
+        >
           <input
             type="date"
             value={date}
@@ -79,7 +83,7 @@ const AddTasks = ({ tasks, setTasks, userID }) => {
           />
           {tasks.map((task) => {
             return (
-              <div key={task.id}>
+              <div className="newTasks" key={task.id}>
                 <textarea
                   type="text"
                   placeholder="Type task"
@@ -98,15 +102,24 @@ const AddTasks = ({ tasks, setTasks, userID }) => {
                     handleInputChange(e, task.id, "priority");
                   }}
                 />
-                <button onClick={() => deleteTask(task.id)}>Delete</button>
+                <button
+                  className="deleteBtn"
+                  onClick={() => deleteTask(task.id)}
+                >
+                  Delete
+                </button>
               </div>
             );
           })}
         </form>
       )}
-      <button onClick={addTasks}>Add Task</button>
+      <button className="addBtn" onClick={addTasks}>
+        Add Task
+      </button>
       {tasks.length !== 0 && (
-        <button onClick={handleSubmit}>Submit Tasks</button>
+        <button className="submitBtn" onClick={handleSubmit}>
+          Submit Tasks
+        </button>
       )}
     </div>
   );

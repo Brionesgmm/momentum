@@ -21,6 +21,25 @@ header * {
   font-size: 1.5rem;
 }
 
+.addBtn {
+  background-color: #0d9cb5;
+  border: none;
+  padding: 0.75rem 1.25rem;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  margin: 0.25rem 0;
+}
+
+.deleteBtn {
+  background-color: #b50d0d;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+}
+
 .submitBtn {
   border: none;
   padding: 1rem 1.5rem;
@@ -28,6 +47,7 @@ header * {
   background-color: #0db513;
   color: white;
   font-weight: bold;
+  margin: 0.25rem 0;
 }
 
 /* Live Tasks Section */
@@ -59,4 +79,39 @@ header * {
   min-height: 30px;
   min-width: 30px;
   margin-right: 0.5rem;
+}
+
+/* Add Tasks Sections */
+
+.addTasksSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.addTaskForm input {
+  font-size: 1.5rem;
+  border: solid 2px black;
+  max-width: 350px;
+  width: 100%;
+  margin: 0.5rem 0;
+}
+
+.newTasks {
+  display: flex;
+  border: solid black 1px;
+  padding: 0.5rem;
+  border-radius: 5px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 0.25rem 0rem;
+}
+
+.newTasks textarea {
+  width: 100%;
+  margin: 0.25rem;
+}
+
+.newTasks input {
+  max-width: 4rem;
+  margin: 0.25rem;
 }
