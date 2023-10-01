@@ -48,12 +48,14 @@ const Profile = () => {
 
   useEffect(() => {
     const fetchTasks = async () => {
-      try {
-        const response = await fetch(`/api/tasks/${userID}`);
-        const { tasks } = await response.json();
-        setCreatedTasks(tasks);
-      } catch (error) {
-        console.error("Error fetching post:", error);
+      if (userID) {
+        try {
+          const response = await fetch(`/api/tasks/${userID}`);
+          const { tasks } = await response.json();
+          setCreatedTasks(tasks);
+        } catch (error) {
+          console.error("Error fetching post:", error);
+        }
       }
     };
 
