@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const LiveTasks = ({ createdTasks }) => {
+const LiveTasks = ({ createdTasks, setIsMakingChanges }) => {
   const [currentDayTasks, setCurrentDayTasks] = useState([]);
   const [todoTasks, setTodoTasks] = useState([]);
   const [todayDate, setTodayDate] = useState("");
@@ -22,6 +22,7 @@ const LiveTasks = ({ createdTasks }) => {
   }
 
   function updateTasks(e, id) {
+    setIsMakingChanges(true);
     const updatedTasks = todoTasks.map((task) => {
       if (task.id === id) {
         return { ...task, completed: e.target.checked };
@@ -47,6 +48,7 @@ const LiveTasks = ({ createdTasks }) => {
     );
     const data = await response.json();
     setCurrentDayTasks(data);
+    setIsMakingChanges(false);
   };
 
   useEffect(() => {

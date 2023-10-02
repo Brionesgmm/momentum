@@ -10,6 +10,7 @@ const Profile = () => {
   const [tasks, setTasks] = useState([]);
   const [createdTasks, setCreatedTasks] = useState([]);
   const [userID, setUserID] = useState("");
+  const [isMakingChanges, setIsMakingChanges] = useState(false);
   const [activeTab, setActiveTab] = useState({
     liveTasks: true,
     addTasks: false,
@@ -62,6 +63,25 @@ const Profile = () => {
     fetchTasks();
   }, [userID]);
 
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      if (isMakingChanges) {
+        const message = "Do you want to leave without saving?";
+        event.preventDefault();
+        event.returnValue = message; // For older browsers and some modern ones
+        return message; // Might be shown in some browsers
+      }
+    };
+
+    if (isMakingChanges) {
+      window.addEventListener("beforeunload", handleBeforeUnload);
+    }
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [isMakingChanges]);
+
   if (!user) {
     return null;
   }
@@ -95,8 +115,16 @@ const Profile = () => {
             {activeTab.goals}
           </div>
           <div className="mt-5">
-            <LiveTasks createdTasks={createdTasks} />
-            <AddTasks tasks={tasks} setTasks={setTasks} userID={userID} />
+            <LiveTasks
+              createdTasks={createdTasks}
+              setIsMakingChanges={setIsMakingChanges}
+            />
+            <AddTasks
+              tasks={tasks}
+              setTasks={setTasks}
+              userID={userID}
+              setIsMakingChanges={setIsMakingChanges}
+            />
             <h2>Add Next Day Tasks</h2>
             <form
               action="/api/post/createPost"

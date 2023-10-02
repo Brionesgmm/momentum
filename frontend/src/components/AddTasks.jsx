@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
 
-const AddTasks = ({ tasks, setTasks, userID }) => {
+const AddTasks = ({ tasks, setTasks, userID, setIsMakingChanges }) => {
   const [date, setDate] = useState(getTomorrowDate());
 
   function getTomorrowDate() {
@@ -13,6 +13,7 @@ const AddTasks = ({ tasks, setTasks, userID }) => {
 
   console.log(userID);
   const handleInputChange = (e, id, field) => {
+    setIsMakingChanges(true);
     const updateTasks = tasks.map((task) => {
       if (task.id === id) {
         return { ...task, [field]: e.target.value };
@@ -23,6 +24,7 @@ const AddTasks = ({ tasks, setTasks, userID }) => {
   };
 
   const addTasks = () => {
+    setIsMakingChanges(true);
     setTasks((preTasks) => {
       const newTasks = [...preTasks];
       const lastTask = newTasks[newTasks.length - 1];
@@ -53,12 +55,14 @@ const AddTasks = ({ tasks, setTasks, userID }) => {
       }),
     });
     const json = await response.json();
+    setIsMakingChanges(false);
     if (json.tasks) {
       setTasks([]);
     }
   };
 
   const deleteTask = (id) => {
+    setIsMakingChanges(true);
     setTasks((prevTasks) => {
       return prevTasks.filter((task) => task.id !== id);
     });
