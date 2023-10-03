@@ -98,9 +98,6 @@ const Profile = () => {
             <p>
               <strong>Email</strong>: {user.email}
             </p>
-            <Link to="/logout" className="col-3 btn btn-primary">
-              Logout
-            </Link>
           </div>
           <div>
             <button>Live Tasks</button>

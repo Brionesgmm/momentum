@@ -27,10 +27,13 @@ function Root() {
   return (
     <>
       <header className="container">
-        <div className="text-center">
-          <h1 className="">
+        <div className="headerSection">
+          <h1 className="mainTitle">
             <Link to={user ? "/profile" : "/"}>Momentum</Link>
           </h1>
+          <Link to="/logout" className="col-3 btn btn-primary deleteBtn">
+            Logout
+          </Link>
         </div>
       </header>
       <Messages messages={messages} />

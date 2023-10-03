@@ -50,6 +50,14 @@ header * {
   margin: 0.25rem 0;
 }
 
+/* Header Section */
+
+.headerSection {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.5rem 0;
+}
+
 /* Live Tasks Section */
 
 .activeTasksForm {
