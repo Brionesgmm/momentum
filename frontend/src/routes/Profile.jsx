@@ -15,6 +15,7 @@ const Profile = () => {
     liveTasks: true,
     addTasks: false,
     tasksCharts: false,
+    addGoals: false,
     goals: false,
   });
 
@@ -34,6 +35,16 @@ const Profile = () => {
       form.reset();
     }
   };
+
+  function changeTab(key) {
+    setActiveTab({
+      liveTasks: "liveTasks" === key,
+      addTasks: "addTasks" === key,
+      tasksCharts: "tasksCharts" === key,
+      addGoals: "addGoals" === key,
+      goals: "goals" === key,
+    });
+  }
 
   useEffect(() => {
     fetch("/api/profile")
@@ -89,92 +100,88 @@ const Profile = () => {
 
   return (
     <div className="container">
-      <div className="row mt-5">
-        <div className="col-6">
-          <div>
-            <p>
-              <strong>User Name</strong>: {user.userName}
-            </p>
-            <p>
-              <strong>Email</strong>: {user.email}
-            </p>
-          </div>
-          <div>
-            <button>Live Tasks</button>
-            <button>Add Tasks</button>
-            <button>Tasks charts</button>
-            <button>Goals</button>
-          </div>
-          <div>
-            {activeTab.liveTasks}
-            {activeTab.addTasks}
-            {activeTab.tasksCharts}
-            {activeTab.goals}
-          </div>
-          <div className="mt-5">
-            <LiveTasks
-              createdTasks={createdTasks}
-              setIsMakingChanges={setIsMakingChanges}
+      <div>
+        <p>
+          <strong>User Name</strong>: {user.userName}
+        </p>
+        <p>
+          <strong>Email</strong>: {user.email}
+        </p>
+        <Link className="btn btn-primary" to="/feed">
+          Return to Feed
+        </Link>
+      </div>
+
+      <div>
+        <button onClick={() => changeTab("liveTasks")}>Live Tasks</button>
+        <button onClick={() => changeTab("addTasks")}>Add Tasks</button>
+        <button onClick={() => changeTab("tasksCharts")}>Tasks charts</button>
+        <button onClick={() => changeTab("goals")}>Goals</button>
+        <button onClick={() => changeTab("addGoals")}>Add Goals</button>
+      </div>
+      <div>
+        {activeTab.liveTasks && (
+          <LiveTasks
+            createdTasks={createdTasks}
+            setIsMakingChanges={setIsMakingChanges}
+          />
+        )}
+        {activeTab.addTasks && (
+          <AddTasks
+            tasks={tasks}
+            setTasks={setTasks}
+            userID={userID}
+            setIsMakingChanges={setIsMakingChanges}
+          />
+        )}
+        {activeTab.tasksCharts}
+        {activeTab.goals}
+        {activeTab.addGoals}
+      </div>
+      <div className="mt-5">
+        <h2>Add Next Day Tasks</h2>
+        <form
+          action="/api/post/createPost"
+          encType="multipart/form-data"
+          method="POST"
+          onSubmit={handleSubmit}
+        >
+          <div className="mb-3">
+            <label htmlFor="title" className="form-label">
+              Title
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="title"
+              name="title"
             />
-            <AddTasks
-              tasks={tasks}
-              setTasks={setTasks}
-              userID={userID}
-              setIsMakingChanges={setIsMakingChanges}
+          </div>
+          <div className="mb-3">
+            <label htmlFor="caption" className="form-label">
+              Caption
+            </label>
+            <textarea
+              className="form-control"
+              id="caption"
+              name="caption"
+            ></textarea>
+          </div>
+          <div className="mb-3">
+            <label htmlFor="imgUpload" className="form-label">
+              Image
+            </label>
+            <input
+              type="file"
+              className="form-control"
+              id="imageUpload"
+              name="file"
             />
-            <h2>Add Next Day Tasks</h2>
-            <form
-              action="/api/post/createPost"
-              encType="multipart/form-data"
-              method="POST"
-              onSubmit={handleSubmit}
-            >
-              <div className="mb-3">
-                <label htmlFor="title" className="form-label">
-                  Title
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="title"
-                  name="title"
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="caption" className="form-label">
-                  Caption
-                </label>
-                <textarea
-                  className="form-control"
-                  id="caption"
-                  name="caption"
-                ></textarea>
-              </div>
-              <div className="mb-3">
-                <label htmlFor="imgUpload" className="form-label">
-                  Image
-                </label>
-                <input
-                  type="file"
-                  className="form-control"
-                  id="imageUpload"
-                  name="file"
-                />
-              </div>
-              <button type="submit" className="btn btn-primary" value="Upload">
-                Submit
-              </button>
-            </form>
           </div>
-        </div>
-        <div className="col-6">
-          <PostList posts={posts} />
-          <div className="row justify-content-center mt-5">
-            <Link className="btn btn-primary" to="/feed">
-              Return to Feed
-            </Link>
-          </div>
-        </div>
+          <button type="submit" className="btn btn-primary" value="Upload">
+            Submit
+          </button>
+        </form>
       </div>
     </div>
   );
