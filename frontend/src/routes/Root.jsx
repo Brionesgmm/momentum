@@ -31,9 +31,11 @@ function Root() {
           <h1 className="mainTitle">
             <Link to={user ? "/profile" : "/"}>Momentum</Link>
           </h1>
-          <Link to="/logout" className="col-3 btn btn-primary deleteBtn">
-            Logout
-          </Link>
+          {user && (
+            <Link to="/logout" className="col-3 btn btn-primary deleteBtn">
+              Logout
+            </Link>
+          )}
         </div>
       </header>
       <Messages messages={messages} />
