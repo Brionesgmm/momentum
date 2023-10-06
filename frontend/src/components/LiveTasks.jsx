@@ -64,7 +64,7 @@ const LiveTasks = ({ createdTasks, setIsMakingChanges }) => {
       );
       setTaskDocID(filteredTasks[0]._id);
     }
-  }, [createdTasks]);
+  }, [createdTasks, todayDate]);
 
   console.log(currentDayTasks, todoTasks, taskDocID);
   return (
